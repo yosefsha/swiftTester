@@ -153,7 +153,8 @@ class FirstViewController: UIViewController {
                 print("json string: \(jsonString1)")
             }
                 let jsonDecoder = JSONDecoder()
-                let sectionsData2 = try jsonDecoder.decode(sectionsData.self, from: jsonData1)
+                let sectionsData2 = try jsonDecoder.decode(SectionsData.self, from: jsonData1)
+                print("sectionsData2: \(sectionsData2)")
 
         }
         catch {
