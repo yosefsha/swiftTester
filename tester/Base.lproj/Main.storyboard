@@ -26,12 +26,30 @@
                                     <action selector="button1Pressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aak-wI-UeR"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhk-xG-pHz">
+                                <rect key="frame" x="149" y="406" width="59" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button 2"/>
+                                <connections>
+                                    <action selector="button2Pressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WQm-1F-2Fm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xpV-PY-Ofn">
+                                <rect key="frame" x="143" y="512" width="59" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button 3"/>
+                                <connections>
+                                    <action selector="button3pressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bQe-NP-HFk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="button1" destination="twO-5w-2Lj" id="I01-pQ-3yy"/>
+                        <outlet property="button2" destination="bhk-xG-pHz" id="fMv-Od-qL9"/>
+                        <outlet property="button3" destination="xpV-PY-Ofn" id="hSM-Re-UiL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
