@@ -65,38 +65,40 @@ struct CellData: Encodable, Decodable {
 }
 
 struct OneSectionData {
-    
+
     var name: String
-    var cellDataArray: Array<CellData>!
-    
-    init(name:String, cellsData: [CellData]) {
-        self.cellDataArray = Array<CellData>()
-        self.cellDataArray.insert(contentsOf: cellsData, at: 0)
+    var cellsDataDict: [String:String]
+
+    init(name:String, cellsData: [String:String]) {
+        self.cellsDataDict = cellsData
         self.name = name
     }
-    enum CodingKeys: String, CodingKey {
-        case name
-        case cellDataArray
-    }
     
+   enum CodingKeys: String, CodingKey {
+        case name
+        case cellsDataDict
+    }
+
 }
 
 extension OneSectionData : Encodable{
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(cellDataArray, forKey: .cellDataArray)
+        try container.encode(cellsDataDict, forKey: OneSectionData.CodingKeys.cellsDataDict)
         try container.encode(name, forKey: .name)
-        
+
     }
 }
+
 
 extension OneSectionData : Decodable{
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         name = try values.decode(String.self, forKey: .name)
-        cellDataArray = try values.decode([CellData].self, forKey: .cellDataArray)
+        cellsDataDict = try values.decode([String:String].self, forKey: .cellsDataDict)
     }
 }
+
 
 struct SectionsData {
     var sectionsDict: [String: OneSectionData]
@@ -106,14 +108,14 @@ struct SectionsData {
     }
     
     enum CodingKeys: String, CodingKey {
-        case sectionsDict = "data"
+        case sectionsDict
     }
 }
 
 extension SectionsData : Encodable{
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(sectionsDict, forKey: .sectionsDict)
+        try container.encode(sectionsDict, forKey: SectionsData.CodingKeys.sectionsDict)
     }
 }
 
@@ -135,13 +137,13 @@ class FirstViewController: UIViewController {
     @IBAction func button3pressed(_ sender: Any) {
         let encoder = JSONEncoder()
         
-        let c1 = CellData(key: "name", val: "yossi")
-        let c2 = CellData(key: "name", val: "david")
-        let c3 = CellData(key: "name", val: "moshe")
-        let c4 = CellData(key: "name", val: "baruch")
-        
-        let s1 = OneSectionData(name:"sec1", cellsData: [c1,c2,c3])
-        let s2 = OneSectionData(name:"sec2", cellsData: [c4])
+//        let c1 = CellData(key: "name", val: "yossi")
+//        let c2 = CellData(key: "name", val: "david")
+//        let c3 = CellData(key: "name", val: "moshe")
+//        let c4 = CellData(key: "name", val: "baruch")
+//        
+        let s1 = OneSectionData(name:"sec1", cellsData: ["name":"moshe", "phone":"054555", "color":"red"])
+        let s2 = OneSectionData(name:"sec2", cellsData: ["age":"222"])
         
         let sectionsData = ["data":[s1.name:s1, s2.name:s2]]
         
@@ -220,4 +222,41 @@ class FirstViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 }
+
+
+
+
+//struct OneSectionData {
+//
+//    var name: String
+//    var cellDataArray: Array<CellData>!
+//
+//    init(name:String, cellsData: [CellData]) {
+//        self.cellDataArray = Array<CellData>()
+//        self.cellDataArray.insert(contentsOf: cellsData, at: 0)
+//        self.name = name
+//    }
+//    enum CodingKeys: String, CodingKey {
+//        case name
+//        case cellDataArray
+//    }
+//
+//}
+//
+//extension OneSectionData : Encodable{
+//    func encode(to encoder: Encoder) throws {
+//        var container = encoder.container(keyedBy: CodingKeys.self)
+//        try container.encode(cellDataArray, forKey: .cellDataArray)
+//        try container.encode(name, forKey: .name)
+//
+//    }
+//}
+//
+//extension OneSectionData : Decodable{
+//    init(from decoder: Decoder) throws {
+//        let values = try decoder.container(keyedBy: CodingKeys.self)
+//        name = try values.decode(String.self, forKey: .name)
+//        cellDataArray = try values.decode([CellData].self, forKey: .cellDataArray)
+//    }
+//}
 
