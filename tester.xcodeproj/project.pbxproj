@@ -15,6 +15,7 @@
 		C0C5404E20C3CBBA0014C191 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0C5404C20C3CBBA0014C191 /* LaunchScreen.storyboard */; };
 		C0C5405920C3CBBA0014C191 /* testerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C5405820C3CBBA0014C191 /* testerTests.swift */; };
 		C0C5406420C3CBBA0014C191 /* testerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C5406320C3CBBA0014C191 /* testerUITests.swift */; };
+		C0F266FC20EE1C1C0038AB40 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F266FB20EE1C1C0038AB40 /* Models.swift */; };
 		E382F811ACF0E99AC48E0EFD /* Pods_testerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4F972A9BEF781ADA028990A /* Pods_testerUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,8 @@
 		C0C5405F20C3CBBA0014C191 /* testerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0C5406320C3CBBA0014C191 /* testerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testerUITests.swift; sourceTree = "<group>"; };
 		C0C5406520C3CBBA0014C191 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C0D269CF20EE525500CD8049 /* MyRxPlayg.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyRxPlayg.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C0F266FB20EE1C1C0038AB40 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		C1F8EBC888F1A18FEEF4C16E /* Pods-testerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testerUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-testerUITests/Pods-testerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		D4F972A9BEF781ADA028990A /* Pods_testerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_testerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -109,6 +112,7 @@
 		C0C5403720C3CBB80014C191 = {
 			isa = PBXGroup;
 			children = (
+				C0D269CF20EE525500CD8049 /* MyRxPlayg.playground */,
 				C0C5404220C3CBB80014C191 /* tester */,
 				C0C5405720C3CBBA0014C191 /* testerTests */,
 				C0C5406220C3CBBA0014C191 /* testerUITests */,
@@ -137,6 +141,7 @@
 				C0C5404A20C3CBBA0014C191 /* Assets.xcassets */,
 				C0C5404C20C3CBBA0014C191 /* LaunchScreen.storyboard */,
 				C0C5404F20C3CBBA0014C191 /* Info.plist */,
+				C0F266FB20EE1C1C0038AB40 /* Models.swift */,
 			);
 			path = tester;
 			sourceTree = "<group>";
@@ -352,6 +357,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0F266FC20EE1C1C0038AB40 /* Models.swift in Sources */,
 				C0C5404620C3CBB80014C191 /* FirstViewController.swift in Sources */,
 				C0C5404420C3CBB80014C191 /* AppDelegate.swift in Sources */,
 			);
@@ -528,7 +534,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5LV34829NP;
+				DEVELOPMENT_TEAM = 596Y23NABW;
 				INFOPLIST_FILE = tester/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -547,7 +553,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5LV34829NP;
+				DEVELOPMENT_TEAM = 596Y23NABW;
 				INFOPLIST_FILE = tester/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
