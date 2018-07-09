@@ -30,96 +30,138 @@ import RxSwift
 
 import Foundation
 
+extension String: Error {}
+enum VendingMachineError: Error {
+    case invalidSelection
+    case insufficientFunds(coinsNeeded: Int)
+    case outOfStock
+}
 
+enum FileError: Error{
+    case fileNotFound, unreadable, encodeFailed
+}
 
+/// A collection of utility methods for common disposable operations.
+//public struct Disposables {
+//    private init() {}
+//}
+
+var s1:String = "s1111"
+var s2:String = "s2222"
+var s3:String = "s3333"
 
 class FirstViewController: UIViewController {
-    var text:String = "hello rx"
-    var textList:[String] = ["aaa","bbb","cc"]
-    
+
     @IBOutlet weak var button1: UIButton!
     @IBOutlet var button3: UIButton!
-    
-    @IBAction func button3pressed(_ sender: Any) {
-        let scheduler = SerialDispatchQueueScheduler(qos: .default) //RxSwift.SerialDispatchQueueScheduler
-        let subscription = Observable<Int>.interval(0.5, scheduler: scheduler)
-            .subscribe { event in
-                print(event)
-                print("iscompleted: \(event.isCompleted)")
-        }
-        
-        Thread.sleep(forTimeInterval: 2.0)
-        
-        subscription.dispose()
-    }
-    
     @IBOutlet var button2: UIButton!
     
-    @IBAction func button2Pressed(_ sender: Any) {
-        self.text += "a"
-        print(self.text)
-        
-    }
-//
     
-    @IBAction func button1Pressed(_ sender: Any){
-        var albums = ["Red", "1989", "Reputation", "The whoo"]
-        var randomIndex = arc4random_uniform(UInt32(albums.count))
-        self.text = albums[Int(randomIndex)]
+    @IBAction func button3pressed(_ sender: Any) {
+        func loadText(filename: String) -> Single<String> {
+            return Single.create(subscribe: { single in
+                let dis = Disposables.create()
+                
+                guard let path = Bundle.main.path(forResource: filename, ofType: "txt") else {
+                    single(.error(FileError.unreadable))
+                    return dis
+                }
+                
+                guard let data = FileManager.default.contents(atPath: path) else {
+                    single(.error(FileError.encodeFailed))
+                    return dis
+                }
+                
+                guard let contents = String(data:data, encoding: .utf8) else {
+                    single(.error(FileError.encodeFailed))
+                    return dis
+                }
+                
+                single(.success(contents))
+                
+                return dis
+            })
+        }
+    }
 
-        print("self.text \(self.text)")
-    }
-    
-    var myObservabel:Observable<String>?
-    
-    //let hello = Observable.of(self.text)
-    var hello: Observable<String> {
-        get{
-            return Observable.of(self.text)
-        }
-        set {
+    @IBAction func button2Pressed(_ sender: Any) {
+        
+//        let obs = Observable<Any>.never()
+//        let dis = obs.subscribe(onNext: {element in
+//            print(element)},
+//                onCompleted: {print("completed observe")})
+//        print("type(of: dis): \(type(of: dis))")
+//        dis.dispose()
+        
+        let disposeBag = DisposeBag()
+        Observable<String>.create({ obs in
+            obs.onNext("R2-D2")
+            obs.onNext("BBBB")
+            obs.onError(VendingMachineError.outOfStock)
+            obs.onNext("CCCC")
+//            obs.onCompleted()
             
+            return Disposables.create()
+        }).subscribe(onNext: {e in print(e)},
+                     onError: {print("Error: \($0)")},
+                     onCompleted: { print("completed")},
+                     onDisposed: {print("disposed")}) //.disposed(by: disposeBag)
+
+        
+        print("end of button3")
+    
+    }
+    
+    func raiseError() throws {
+//        throw VendingMachineError.outOfStock
+//        let e = NSError.init(domain: "domainA", code: 10, userInfo: nil)
+        let e = NSError.init()
+//        e.localizedDescription = "aaa"
+        throw e
+    }
+
+    @IBAction func button1Pressed(_ sender: Any){
+        do {
+            print("do stuff")
+            try raiseError()
+        }
+//        catch String {
+//            print(error)
+//        }
+//        catch VendingMachineError.outOfStock  {
+//            print(error)
+//        }
+            
+        catch {
+            if let err = error as? String {
+                print(err)
+            }
+            else {
+                print("error: \(error)")
+//                print("type of error : \(type(of: error))")
+//                let err = "\(error.localizedDescription)"
+//                print("the error as string: \(err)")
+//                print("type of err : \(type(of: err))")
+            }
         }
     }
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        helloSequence = Observable.of(self.text)
-        myObservabel = Observable.of(self.text)
-        
-        let listSequence = Observable.of(self.textList)
-        
-        let variableText = Variable<String>("")
-        let observableText = variableText.asObservable()
-        
-//        hello.do(
-//            onNext: { value in
-//
-//        }
-//            )
-//
-//        let subscription = helloSequence.subscribe { event in
-//            print(event)
-//        }
-        
-        myObservabel?.do(onNext: {s in print("the new val: \(s)")}
-            , onError: nil,
-              onCompleted: {print("cmpleted event received")},
-              onSubscribe: nil,
-              onSubscribed: nil,
-              onDispose: nil).subscribe().disposed(by: DisposeBag())
-        
-        let secondSubscription = listSequence.subscribe { event in
-            print(event)
-        }
-      
+
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
 
 
+//        myObservabel?.do(onNext: {s in print("the new val: \(s)")}
+//            , onError: nil,
+//              onCompleted: {print("cmpleted event received")},
+//              onSubscribe: nil,
+//              onSubscribed: nil,
+//              onDispose: nil).subscribe().disposed(by: DisposeBag())
 
