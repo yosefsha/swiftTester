@@ -58,6 +58,8 @@ class FirstViewController: UIViewController {
     
     
     @IBAction func button3pressed(_ sender: Any) {
+        
+        let disposebag = DisposeBag()
         func loadText(filename: String) -> Single<String> {
             return Single.create(subscribe: { single in
                 let dis = Disposables.create()
@@ -82,34 +84,33 @@ class FirstViewController: UIViewController {
                 return dis
             })
         }
+        
+        let r = loadText(filename: "aaa")
+        print("type of loadtext return: \(type(of: r))")
+            r.subscribe{
+                switch $0 {
+                case .success(let str):
+                    print(str)
+                case .error(let error):
+                    print(error)
+                }
+        }
+        .disposed(by: disposebag)
+        
     }
+    
+    
 
     @IBAction func button2Pressed(_ sender: Any) {
+        let disposebag = DisposeBag()
         
-//        let obs = Observable<Any>.never()
-//        let dis = obs.subscribe(onNext: {element in
-//            print(element)},
-//                onCompleted: {print("completed observe")})
-//        print("type(of: dis): \(type(of: dis))")
-//        dis.dispose()
+        let subject = ReplaySubject<String>.create(bufferSize: 2)
         
-        let disposeBag = DisposeBag()
-        Observable<String>.create({ obs in
-            obs.onNext("R2-D2")
-            obs.onNext("BBBB")
-            obs.onError(VendingMachineError.outOfStock)
-            obs.onNext("CCCC")
-//            obs.onCompleted()
-            
-            return Disposables.create()
-        }).subscribe(onNext: {e in print(e)},
-                     onError: {print("Error: \($0)")},
-                     onCompleted: { print("completed")},
-                     onDisposed: {print("disposed")}) //.disposed(by: disposeBag)
-
+        subject.onNext(useTheForce)
         
-        print("end of button3")
-    
+        subject.subscribe({ print(label: "1: ", event: <#T##Event<CustomStringConvertible>#>)})
+        
+        
     }
     
     func raiseError() throws {
@@ -121,29 +122,19 @@ class FirstViewController: UIViewController {
     }
 
     @IBAction func button1Pressed(_ sender: Any){
-        do {
-            print("do stuff")
-            try raiseError()
-        }
-//        catch String {
-//            print(error)
-//        }
-//        catch VendingMachineError.outOfStock  {
-//            print(error)
-//        }
-            
-        catch {
-            if let err = error as? String {
-                print(err)
-            }
-            else {
-                print("error: \(error)")
-//                print("type of error : \(type(of: error))")
-//                let err = "\(error.localizedDescription)"
-//                print("the error as string: \(err)")
-//                print("type of err : \(type(of: err))")
-            }
-        }
+        let disposebag = DisposeBag()
+        
+        let quotes = BehaviorSubject<String>(value: iAmYourFather)
+        
+        let sub1 = quotes.subscribe({print(label: "1: ", event: $0 )})
+        
+        sub1.disposed(by: disposebag)
+        
+        quotes.onError(Quote.neverSaidThat)
+        
+        quotes.subscribe({ print(label: "2:", event: $0)}).disposed(by: disposebag)
+        
+        
     }
     
 
